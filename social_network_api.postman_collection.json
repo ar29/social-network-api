@@ -1,0 +1,218 @@
+{
+    "info": {
+      "name": "Social Network API",
+      "description": "Postman collection for the Social Network API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Signup",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/api/signup/",
+            "host": ["{{base_url}}"],
+            "path": ["api", "signup", ""]
+          },
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"testuser@example.com\",\n  \"password\": \"testpassword\"\n}"
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Login",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/api/token/",
+            "host": ["{{base_url}}"],
+            "path": ["api", "token", ""]
+          },
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"testpassword\"\n}"
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Refresh Token",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/api/token/refresh/",
+            "host": ["{{base_url}}"],
+            "path": ["api", "token", "refresh", ""]
+          },
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Search Users",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{access_token}}"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/api/search/?query={{search_query}}",
+            "host": ["{{base_url}}"],
+            "path": ["api", "search", ""],
+            "query": [
+              {
+                "key": "query",
+                "value": "{{search_query}}"
+              }
+            ]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Send Friend Request",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{access_token}}"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/api/friend-request/send/",
+            "host": ["{{base_url}}"],
+            "path": ["api", "friend-request", "send", ""]
+          },
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"to_user_id\": \"{{to_user_id}}\"\n}"
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Respond to Friend Request",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{access_token}}"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/api/friend-request/respond/{{request_id}}/",
+            "host": ["{{base_url}}"],
+            "path": ["api", "friend-request", "respond", "{{request_id}}"]
+          },
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"action\": \"{{action}}\"\n}"
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "List Friends",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{access_token}}"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/api/friends/",
+            "host": ["{{base_url}}"],
+            "path": ["api", "friends", ""]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "List Pending Friend Requests",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{access_token}}"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/api/friend-requests/pending/",
+            "host": ["{{base_url}}"],
+            "path": ["api", "friend-requests", "pending", ""]
+          }
+        },
+        "response": []
+      }
+    ],
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://localhost:8000"
+      },
+      {
+        "key": "access_token",
+        "value": ""
+      },
+      {
+        "key": "refresh_token",
+        "value": ""
+      },
+      {
+        "key": "search_query",
+        "value": ""
+      },
+      {
+        "key": "to_user_id",
+        "value": ""
+      },
+      {
+        "key": "request_id",
+        "value": ""
+      },
+      {
+        "key": "action",
+        "value": ""
+      }
+    ]
+  }
+  
