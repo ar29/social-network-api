@@ -9,6 +9,12 @@ from rest_framework.throttling import UserRateThrottle
 
 User = get_user_model()
 
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
 class UserSignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -21,7 +27,7 @@ class UserSearchView(generics.ListAPIView):
     def get_queryset(self):
         query = self.request.query_params.get('query', '')
         return User.objects.filter(
-            Q(email__iexact=query) | Q(username__icontains=query) |
+            Q(email__icontains=query) |
             Q(first_name__icontains=query) | Q(last_name__icontains=query)
         ).distinct()
 
@@ -36,12 +42,12 @@ class SendFriendRequestView(APIView):
         to_user_id = request.data.get('to_user_id')
         to_user = User.objects.get(id=to_user_id)
         from_user = request.user
+        fr = FriendRequest.objects.filter(from_user=from_user, to_user=to_user)
+        if fr.exists():
+            return Response({"message": f"Friend request already sent! request_id {fr[0].id}"}, status=status.HTTP_400_BAD_REQUEST)
 
-        if FriendRequest.objects.filter(from_user=from_user, to_user=to_user).exists():
-            return Response({"message": "Friend request already sent"}, status=status.HTTP_400_BAD_REQUEST)
-
-        FriendRequest.objects.create(from_user=from_user, to_user=to_user)
-        return Response({"message": "Friend request sent"}, status=status.HTTP_201_CREATED)
+        fr = FriendRequest.objects.create(from_user=from_user, to_user=to_user)
+        return Response({"message": f"Friend request sent. request_id {fr.id}"}, status=status.HTTP_201_CREATED)
 
 class RespondFriendRequestView(APIView):
     permission_classes = [permissions.IsAuthenticated]

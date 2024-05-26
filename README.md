@@ -24,49 +24,9 @@ This is a social networking application API built with Django Rest Framework. Th
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/yourusername/social-network-api.git
+   git clone https://github.com/ar29/social-network-api.git
    cd social-network-api
    ```
-2. Create and activate a virtual environment:
-
-    ```sh
-    python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-    ```
-3. Install dependencies:
-    
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-4. Set up the database:
-    ```sh
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'social_network',
-        'USER': 'your_db_user',
-        'PASSWORD': 'your_db_password',
-        'HOST': 'localhost',
-        'PORT': '',
-        }
-    }
-    ```
-
-5. Run database migrations:
-    ```sh
-    python manage.py migrate
-    ```
-
-6. Create a superuser:
-    ```sh
-    python manage.py createsuperuser
-    ```
-
-7. Run the development server:
-    ```sh
-    python manage.py createsuperuser
-    ```
 
 ### Docker Setup
 
@@ -78,6 +38,9 @@ This is a social networking application API built with Django Rest Framework. Th
     ```
 
 2. Run database migrations inside the web container:
+    ```sh
+    docker-compose exec web python manage.py makemigrations users
+    ```
     ```sh
     docker-compose exec web python manage.py migrate
     ```
@@ -95,7 +58,7 @@ This is a social networking application API built with Django Rest Framework. Th
 - Token Refresh: POST /api/token/refresh/
 - Search Users: GET /api/search/?query=<search_query>
 - Send Friend Request: POST /api/friend-request/send/
-- Respond to Friend Request: POST /api/friend-request/respond/<request_id>/
+- Respond to Friend Request: POST /api/friend-request/respond/<request_id>/ (response action can be "accept" or "reject")
 - List Friends: GET /api/friends/
 - List Pending Friend Requests: GET /api/friend-requests/pending/
 
